@@ -37,6 +37,10 @@ export default {
 </script>
 
 <style scoped>
+.x-container {
+  width: 979px;
+}
+
 .user {
   display: flex;
   padding-bottom: 14px;

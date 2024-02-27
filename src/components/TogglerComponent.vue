@@ -1,29 +1,41 @@
 <template>
-    <button :class="['button', { 'active': isOpened }]" @click="toggle">
-        <span class="text">{{ isOpened ? "Hide" : "View" }} issues</span>
-        <span class="icon">
-            <IconComponent name="IconArrow" />
-        </span>
-    </button>
+    <xButton @onToggle="toggle"/>
+    <div class="comments" v-if="shown">
+        <ul class="comments_list">
+            <li class="comments_item" v-for="comment in feed.feed_comments" :key="comment.id">
+                <CommentUser :text="comment.comment" :username="comment.username" />
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
-import IconComponent from '../icons/IconComponent.vue'
+import xButton from '../components/xButton.vue'
+import CommentUser from '../components/CommentUser.vue'
 
 export default {
     name: 'TogglerComponent',
     components: {
-        IconComponent
+        xButton,
+        CommentUser
+    },
+    props: {
+        feed:{
+            type: Object,
+            required: true
+        }
     },
     data() {
         return {
-            isOpened: false
+            
+            shown: false,
         }
     },
     methods: {
-        toggle() {
-            this.isOpened = !this.isOpened
-            this.$emit("onToggle", this.isOpened)
+        toggle(isOpened) {
+           
+            this.shown = isOpened
+            this.$emit("onToggle",isOpened)
         }
     }
 }

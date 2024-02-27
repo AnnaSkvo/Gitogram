@@ -56,14 +56,7 @@
               </div>
             </template>
             <template #comments>
-              <TogglerComponent @onToggle="toggle" />
-              <div class="comments" v-if="shown">
-                <ul class="comments_list">
-                  <li class="comments_item" v-for="comment in feed.feed_comments" :key="comment.id">
-                    <CommentUser :text="comment.comment" :username="comment.username" />
-                  </li>
-                </ul>
-              </div>
+              <TogglerComponent :feed="feed"/>
             </template>
             <template #date>
               <p class="feed_date">{{ feed.feed_date }}</p>
@@ -80,7 +73,6 @@ import HeaderLine from '../components/HeaderLine.vue'
 import IconComponent from '../icons/IconComponent.vue'
 import StoriesItem from '../components/StoriesItem.vue'
 import TogglerComponent from '../components/TogglerComponent.vue'
-import CommentUser from '../components/CommentUser.vue'
 import CurrentUserTop from '../components/CurrentUserTop.vue'
 import NewsCard from '../components/NewsCard.vue'
 
@@ -96,7 +88,6 @@ export default {
     IconComponent,
     StoriesItem,
     TogglerComponent,
-    CommentUser,
     CurrentUserTop,
     NewsCard
   },
@@ -104,17 +95,12 @@ export default {
     return {
       stories,
       currentuser,
-      shown: false,
       feeds
     }
   },
   methods: {
     storyPress(id) {
       console.log("id", id)
-    },
-    toggle(isOpened) {
-      console.log("isOpened", isOpened)
-      this.shown = isOpened
     },
     currentuserPress(id) {
       console.log("cvurrent_user_id", id)
