@@ -1,8 +1,8 @@
 <template>
-    <ArrowButton @onToggle="toggle"/>
+    <ArrowButton @onToggle="toggle" />
     <div class="comments" v-if="shown">
         <ul class="comments_list">
-            <li class="comments_item" v-for="comment in feed.feed_comments" :key="comment.id">
+            <li class="comments_item" v-for="comment in feed_comments" :key="comment.id">
                 <CommentUser :text="comment.comment" :username="comment.username" />
             </li>
         </ul>
@@ -20,22 +20,39 @@ export default {
         CommentUser
     },
     props: {
-        feed:{
+        feed: {
             type: Object,
             required: true
         }
     },
     data() {
         return {
-            
+
             shown: false,
+            feed_comments: [
+                {
+                    "id": "1",
+                    "username": "joshua_l",
+                    "comment": "Enable performance measuring in production, at the user's request"
+                },
+                {
+                    "id": "2",
+                    "username": "Camille",
+                    "comment": "It's Impossible to Rename an Inherited Slot"
+                },
+                {
+                    "id": "3",
+                    "username": "Marselle",
+                    "comment": "transition-group with flex parent causes removed items to fly"
+                }
+            ]
         }
     },
     methods: {
         toggle(isOpened) {
-           
+
             this.shown = isOpened
-            this.$emit("onToggle",isOpened)
+            this.$emit("onToggle", isOpened)
         }
     }
 }
@@ -60,4 +77,3 @@ export default {
     transform: rotate(0deg);
 }
 </style>
-

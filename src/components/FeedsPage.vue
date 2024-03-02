@@ -15,6 +15,7 @@
           </div>
         </div>
       </template>
+
       <template #stories>
         <ul class="stories_list">
           <li class="stories_link" v-for="story in stories" :key="story.id">
@@ -29,15 +30,17 @@
       <li class="feed_link" v-for="feed in feeds" :key="feed.id">
         <div class="news_card">
           <NewsCard>
+
             <template #user>
               <div class="avatar">
-                <img :src="feed.user_avatar" class="img" alt="user_avatar">
+                <img :src="feed.owner.avatar_url" class="img" alt="user_avatar">
               </div>
-              <p class="user_name">{{ feed.username }}</p>
+              <p class="user_name">{{ feed.owner.login }}</p>
             </template>
+
             <template #news>
-              <h1 class="news_title">{{ feed.feed_title }}</h1>
-              <p class="news_text">{{ feed.feed_text }}</p>
+              <h1 class="news_title">{{ feed.name }}</h1>
+              <p class="news_text">{{ feed.description }}</p>
               <div class="star_fork">
                 <div class="star_text">
                   <div class="icon_star_fork">
@@ -45,21 +48,23 @@
                   </div>
                   <div>Star</div>
                 </div>
-                <div class="star_value">{{ feed.star }}</div>
+                <div class="star_value">{{ feed.stargazers_count }}</div>
                 <div class="fork_text">
                   <div class="icon_star_fork">
                     <IconComponent name="IconFork" style="margin-top: 2px;" />
                   </div>
                   <div class="fork_text_content">Fork</div>
                 </div>
-                <div class="fork_value">{{ feed.fork }}</div>
+                <div class="fork_value">{{ feed.forks_count }}</div>
               </div>
             </template>
+
             <template #comments>
               <TogglerComponent :feed="feed" />
             </template>
+
             <template #date>
-              <p class="feed_date">{{ feed.feed_date }}</p>
+              <p class="feed_date">{{ (new Date(feed.created_at)).toLocaleDateString() }}</p>
             </template>
           </NewsCard>
         </div>
@@ -78,7 +83,8 @@ import NewsCard from '../components/NewsCard/NewsCard.vue'
 
 import stories from './stories.json'
 import currentuser from './currentuser.json'
-import feeds from './feeds.json'
+
+import * as api from '../api'
 
 
 export default {
@@ -95,8 +101,17 @@ export default {
     return {
       stories,
       currentuser,
-      feeds
+      feeds: []
     }
+  },
+  async created() {
+    try {
+      const { data } = await api.trandings.getTrendings();
+      this.feeds = data.items;
+    } catch (error) {
+      console.log("error")
+    }
+
   },
   methods: {
     storyPress(id) {
