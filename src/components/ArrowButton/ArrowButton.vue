@@ -16,12 +16,6 @@ export default {
     components: {
         IconComponent,
     },
-    props: {
-        feed:{
-            type: Object,
-            required: true
-        }
-    },
     data() {
         return {
             isOpened: false,
