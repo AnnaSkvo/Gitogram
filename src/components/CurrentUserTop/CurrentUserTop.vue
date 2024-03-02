@@ -1,8 +1,6 @@
 <template>
     <button class="currentuser" @click="$emit('onPress')">
-        <div class="avatar">
-            <img :src="avatar" class="img" alt="currentuser_avatar">
-        </div>
+        <img :src="avatar" class="img" alt="currentuser_avatar">
     </button>
 </template>
 
@@ -19,15 +17,17 @@ export default {
 </script>
 
 <style scoped>
-.avatar, .currentuser {
-    width: 32px;
-    height: 32px;
-    
-}
-
-.img {
+.currentuser {
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    overflow: hidden;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
 }
 </style>

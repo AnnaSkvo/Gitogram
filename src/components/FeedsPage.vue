@@ -56,7 +56,7 @@
               </div>
             </template>
             <template #comments>
-              <TogglerComponent :feed="feed"/>
+              <TogglerComponent :feed="feed" />
             </template>
             <template #date>
               <p class="feed_date">{{ feed.feed_date }}</p>
@@ -71,10 +71,10 @@
 <script>
 import HeaderLine from '../components/HeaderLine.vue'
 import IconComponent from '../icons/IconComponent.vue'
-import StoriesItem from '../components/StoriesItem.vue'
-import TogglerComponent from '../components/TogglerComponent.vue'
-import CurrentUserTop from '../components/CurrentUserTop.vue'
-import NewsCard from '../components/NewsCard.vue'
+import StoriesItem from '../components/StoriesItem/StoriesItem.vue'
+import TogglerComponent from '../components/TogglerComponent/TogglerComponent.vue'
+import CurrentUserTop from '../components/CurrentUserTop/CurrentUserTop.vue'
+import NewsCard from '../components/NewsCard/NewsCard.vue'
 
 import stories from './stories.json'
 import currentuser from './currentuser.json'
@@ -144,8 +144,10 @@ export default {
 }
 
 .avatar {
-  max-width: 44px;
-  max-height: 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .img {

@@ -1,5 +1,5 @@
 <template>
-    <xButton @onToggle="toggle"/>
+    <ArrowButton @onToggle="toggle"/>
     <div class="comments" v-if="shown">
         <ul class="comments_list">
             <li class="comments_item" v-for="comment in feed.feed_comments" :key="comment.id">
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import xButton from '../components/xButton.vue'
-import CommentUser from '../components/CommentUser.vue'
+import ArrowButton from '../../components/ArrowButton/ArrowButton.vue'
+import CommentUser from '../../components/CommentUser/CommentUser.vue'
 
 export default {
     name: 'TogglerComponent',
     components: {
-        xButton,
+        ArrowButton,
         CommentUser
     },
     props: {

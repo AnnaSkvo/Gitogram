@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import IconComponent from '../icons/IconComponent.vue'
+import IconComponent from '../../icons/IconComponent.vue'
 
 
 export default {
-    name: 'xButton',
+    name: 'ArrowButton',
     components: {
         IconComponent,
     },
