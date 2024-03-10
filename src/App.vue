@@ -1,15 +1,12 @@
 <template>
-  <FeedsPage />
+   <router-view />
 </template>
 
 <script>
-import FeedsPage from './components/FeedsPage.vue'
+
 
 export default {
-  name: 'App',
-  components: {
-    FeedsPage
-  }
+  name: 'App'
 }
 </script>
 

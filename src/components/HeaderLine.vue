@@ -18,11 +18,7 @@ export default {
 </script>
 
 <style scoped>
-.headerline{
-  background-color: #FAFAFA;
-  border-bottom: 1px solid #eeeeee;
-  height: 276px;
-}
+
 .navigate{
   display: flex;
   justify-content: space-between;

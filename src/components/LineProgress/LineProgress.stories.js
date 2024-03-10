@@ -17,9 +17,6 @@ export const defaultView = {
         setup() {
             return { args };
         },
-        template: `<LineProgress v-bind="args" @onFinish="args.onFinish"></LineProgress>`,
+        template: `<LineProgress @onFinish="args.onFinish"></LineProgress>`,
     }),
-    args: {
-        second: 2
-    }
 }

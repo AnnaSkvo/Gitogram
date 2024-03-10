@@ -1,7 +1,7 @@
 <template>
     <div class="container_progress">
         <div id="indicator" class="line_progress" :style="{
-            'animation-duration': this.second + 's',
+            'animation-duration': 2 + 's',
             'animation-name': 'slidein',
             'position': 'absolute',
             'height': '2px',
@@ -14,12 +14,6 @@
 <script>
 export default {
     name: 'LineProgress',
-    props: {
-        second: {
-            type: Number,
-            required: true
-        },
-    },
     emits: ["onFinish"],
     methods: {
         emitOnFinish() {
@@ -28,7 +22,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            setTimeout(this.emitOnFinish, this.second * 1000)
+            setTimeout(this.emitOnFinish, 2000)
         })
     }
 }

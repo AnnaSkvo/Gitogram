@@ -1,29 +1,31 @@
 <template>
   <header>
-    <HeaderLine>
-      <template #navigate>
-        <div class="logo">
-          <IconComponent name="IconGitogram" />
-        </div>
-        <div class="rightmenu">
-          <div class="icon">
-            <IconComponent name="IconHome" />
+    <div class="headerline">
+      <HeaderLine>
+        <template #navigate>
+          <div class="logo">
+            <IconComponent name="IconGitogram" />
           </div>
-          <CurrentUserTop :avatar="currentuser.avatar" @onPress="currentuserPress(currentuser.id)" />
-          <div class="icon">
-            <IconComponent name="IconExit" />
+          <div class="rightmenu">
+            <div class="icon">
+              <IconComponent name="IconHome" />
+            </div>
+            <CurrentUserTop :avatar="currentuser.avatar" @onPress="currentuserPress(currentuser.id)" />
+            <div class="icon">
+              <IconComponent name="IconExit" />
+            </div>
           </div>
-        </div>
-      </template>
+        </template>
 
-      <template #stories>
-        <ul class="stories_list">
-          <li class="stories_link" v-for="story in stories" :key="story.id">
-            <StoriesItem :avatar="story.avatar" :username="story.username" @onPress="storyPress(story.id)" />
-          </li>
-        </ul>
-      </template>
-    </HeaderLine>
+        <template #stories>
+          <ul class="stories_list">
+            <li class="stories_link" v-for="story in stories" :key="story.id">
+              <StoriesItem :avatar="story.avatar" :username="story.username" @onPress="storyPress(story.id)" />
+            </li>
+          </ul>
+        </template>
+      </HeaderLine>
+    </div>
   </header>
   <main class="content_feed">
     <ul class="feed_list">
@@ -106,7 +108,7 @@ export default {
   },
   async created() {
     try {
-      const { data } = await api.trandings.getTrendings();
+      const { data } = await api.trendings.getTrendings();
       this.feeds = data.items;
     } catch (error) {
       console.log("error")
@@ -115,7 +117,8 @@ export default {
   },
   methods: {
     storyPress(id) {
-      console.log("id", id)
+      console.log(id)
+      this.$router.push({ name: 'stories', params: { initialSlide: id } })
     },
     currentuserPress(id) {
       console.log("cvurrent_user_id", id)
@@ -125,6 +128,12 @@ export default {
 </script>
 
 <style scoped>
+.headerline {
+  background-color: #FAFAFA;
+  border-bottom: 1px solid #eeeeee;
+  height: 276px;
+}
+
 .logo {
   width: 174px;
 }

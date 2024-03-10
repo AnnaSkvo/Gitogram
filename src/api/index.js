@@ -1,1 +1,1 @@
-export * as trandings from './rest/trendings.js'
+export * as trendings from './rest/trendings.js'
