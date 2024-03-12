@@ -27,8 +27,6 @@ export default {
   },
   methods: {
     toggle(isOpened) {
-      console.log("isOpened", isOpened)
-      console.log("this.shown", this.shown)
       this.shown = isOpened
     },
 

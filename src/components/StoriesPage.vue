@@ -38,6 +38,11 @@ export default {
         return {
         }
     },
+    mounted() {
+        console.log("4 $route.params.initialSlide",this.$route.params.initialSlide)
+        console.log("5 this.initialSlide",this.initialSlide)
+        console.log("6 this.$route",this.$route)
+    }
 }
 </script>
 
@@ -68,6 +73,6 @@ export default {
 .content_slider {
     background-color: #000000;
     height: calc(100vh - 128px);
-    overflow: auto;
+    overflow: hidden;
 }
 </style>

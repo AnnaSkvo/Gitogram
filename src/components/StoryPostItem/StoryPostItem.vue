@@ -2,39 +2,40 @@
     <div class="story_post_item" :class="{ active }">
         <div class="slider_item_container">
             <div class="header">
-                <LineProgress :active="active" @onFinish="$emit('onProgressFinish')"/>
+                <LineProgress v-if="active" @onFinish="$emit('onProgressFinish')" />
                 <div class="user">
                     <div class="avatar">
-                        <img :src="data.user_avatar" class="img" alt="user_avatar">
+                        <img :src="data.userAvatar" class="img" alt="user_avatar">
                     </div>
                     <p class="user_name">{{ data.username }}</p>
                 </div>
             </div>
             <div class="content">
-
+                <div class="scroll_main">
                 <div class="loader" v-if="loading">
                     <SpinnerItem />
                 </div>
                 <div class="info" v-else>
                     <div v-if="data.content?.length" class="content-text" v-html="data.content"></div>
-                    <PlaceholderComponent v-else :paragrafs="2" />
+                    <PlaceholderComponent v-else />
                 </div>
+            </div>
             </div>
             <div class="footer">
                 <xButton>Follow</xButton>
             </div>
-            <template v-if="active">
-                <button v-if="btnsShown.includes('next')" class="btn btn-next" @click="$emit('onNextSlide')">
-                    <span class="icon">
-                        <IconComponent name="IconArrow" />
-                    </span>
-                </button>
+            <div class="arrow_btn" v-if="active">
                 <button v-if="btnsShown.includes('prev')" class="btn btn-prev" @click="$emit('onPrevSlide')">
                     <span class="icon">
                         <IconComponent name="IconArrow" />
                     </span>
                 </button>
-            </template>
+                <button v-if="btnsShown.includes('next')" class="btn btn-next" @click="$emit('onNextSlide')">
+                    <span class="icon">
+                        <IconComponent name="IconArrow" />
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -48,15 +49,19 @@
 import LineProgress from '../../components/LineProgress/LineProgress.vue'
 import xButton from '../../components/xButton/xButton.vue'
 import IconComponent from '../../icons/IconComponent.vue'
+import PlaceholderComponent from '../../components/PlaceholderComponent/PlaceholderComponent.vue'
+import SpinnerItem from '../../components/SpinnerItem/SpinnerItem.vue'
 
 export default {
-    name: 'SliderItem',
+    name: 'StoryPostItem',
     components: {
         LineProgress,
         xButton,
-        IconComponent
+        IconComponent,
+        PlaceholderComponent,
+        SpinnerItem
     },
-    emits:['onPrevSlide', 'onNextSlide', 'onProgressFinish'],
+    emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish'],
     props: {
         active: Boolean,
         loading: Boolean,
@@ -64,7 +69,7 @@ export default {
             type: Array,
             default: () => ['next', 'prev'],
             validator(value) {
-                return value.every(item => item == 'next' || item == 'prev')
+                return value.every(item => item === 'next' || item === 'prev')
             }
         },
         data: {
@@ -84,6 +89,11 @@ export default {
     border-radius: 10px;
     border: 1px solid #cacaca;
     transform: scale(0.8);
+    position: relative;
+}
+
+.active .slider_item_container {
+    transform: scale(1);
 }
 
 .header {
@@ -124,9 +134,69 @@ export default {
 
 
 .footer {
-    height: calc(100% - 596px);
+    height: calc(100% - 606px);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.btn {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    color: #404040;
+}
+
+.btn:hover .icon {
+    color: green;
+}
+
+.btn-prev{
+    position: absolute;
+    top: 50%;
+    margin-left: -46px;
+    transform: rotate(180deg);
+    left: 0;
+    z-index: 1;
+}
+
+.btn-next{
+    position: absolute;
+    top: 50%;
+    margin-right: -46px;
+    right: 0;
+    z-index: 1;
+}
+
+.scroll_main{
+    height: calc(100% - 5px);
+    margin: 10px 5px 5px 10px;
+    overflow: auto;
+}
+
+.scroll_main::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.scroll_main::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scroll_main::-webkit-scrollbar-thumb {
+    background-color: #afafaf;
+    border-radius: 10px;
 }
 </style>

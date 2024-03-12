@@ -1,12 +1,6 @@
 <template>
     <div class="container_progress">
-        <div id="indicator" class="line_progress" :style="{
-            'animation-duration': 2 + 's',
-            'animation-name': 'slidein',
-            'position': 'absolute',
-            'height': '2px',
-            'background-color': '#31AE54'
-        }">
+        <div id="indicator" class="line_progress">
         </div>
     </div>
 </template>
@@ -22,7 +16,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            setTimeout(this.emitOnFinish, 2000)
+            setTimeout(this.emitOnFinish, 5000)
         })
     }
 }
@@ -35,5 +29,22 @@ export default {
     height: 2px;
     background-color: #31AE544D;
 }
-</style>
 
+.line_progress {
+    animation-duration: 5s;
+    animation-name: slidein;
+    position: absolute;
+    height: 2px;
+    background-color: #31AE54;
+}
+
+@keyframes slidein {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+</style>

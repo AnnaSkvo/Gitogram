@@ -19,8 +19,8 @@
 
         <template #stories>
           <ul class="stories_list">
-            <li class="stories_link" v-for="story in stories" :key="story.id">
-              <StoriesItem :avatar="story.avatar" :username="story.username" @onPress="storyPress(story.id)" />
+            <li class="stories_link" v-for="story in feeds" :key="story.id">
+              <StoriesItem :avatar="story.owner.avatar_url" :username="story.owner.login" @onstoryPress="storyPress(story.id)" />
             </li>
           </ul>
         </template>
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     storyPress(id) {
-      console.log(id)
+      console.log("id",id)
       this.$router.push({ name: 'stories', params: { initialSlide: id } })
     },
     currentuserPress(id) {
@@ -151,7 +151,12 @@ export default {
 
 .stories_list {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
+  overflow: auto;
+}
+
+.stories_link{
+  margin: 0 10px;
 }
 
 .content_feed {

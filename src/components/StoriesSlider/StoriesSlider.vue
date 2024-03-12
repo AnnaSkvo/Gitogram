@@ -1,14 +1,15 @@
 <template>
     <div class="stories_slider">
         <div class="stories_container">
-            <ul class="stories">
-                <li class="stories-item" v-for="(trending, ndx) in trendings" :key="trending.id" ref="item">
-                    <StoryPostItem :data="getStoryData(trending)" :active="slideNdx == ndx"
-                        :loading="slideNdx == ndx && loading" :btnsShown="activeBtns"
+            <ul class="stories" ref="item">
+                <li class="stories-item" v-for="(trending, ndx) in trendings" :key="trending.id">
+                    <StoryPostItem :data="getStoryData(trending)" :active="slideNdx === ndx"
+                        :loading="slideNdx === ndx && loading" :btnsShown="activeBtns"
                         @onNextSlide="handleSlide(ndx + 1)" @onPrevSlide="handleSlide(ndx - 1)"
                         @onProgressFinish="handleSlide(ndx + 1)" />
                 </li>
             </ul>
+            <pre>{{ trendings }}</pre>
 
         </div>
     </div>
@@ -20,13 +21,13 @@ import { mapState, mapActions } from "vuex"
 
 export default {
     name: 'StoriesSlider',
-    components: {
-        StoryPostItem
-    },
     props: {
         initialSlide: {
             type: Number
         }
+    },
+    components: {
+        StoryPostItem
     },
     data() {
         return {
@@ -34,16 +35,16 @@ export default {
             sliderPosition: 0,
             loading: false,
             btnsShown: true
-        }
+        };
     },
     computed: {
         ...mapState({
             trendings: state => state.trendings.data
         }),
         activeBtns() {
-            if (this.btnsShown == false) return []
-            if (this.slideNdx == 0) return ['next']
-            if (this.slideNdx == this.trendings.length - 1) return ['prev']
+            if (this.btnsShown === false) return []
+            if (this.slideNdx === 0) return ['next']
+            if (this.slideNdx === this.trendings.length - 1) return ['prev']
             return ['next', 'prev'];
         }
     },
@@ -65,16 +66,13 @@ export default {
             }
         },
         moveSlider(slideNdx) {
-            const { slider, item } = this.$refs;
-            const slideWidth = parseInt(
-                getComputedStyle(item).getPropertyValue('width'), 10
-            );
+            const { item } = this.$refs;
+            const slideWidth = 378;
             this.slideNdx = slideNdx;
             this.sliderPosition = -(slideWidth * slideNdx);
 
-            slider.style.transform = `translateX(${this.sliderPosition}px)`
+            item.style.transform = `translateX(${this.sliderPosition}px)`
         },
-
         async loadReadme() {
             this.loading = true;
             this.btnsShown = false;
@@ -82,12 +80,11 @@ export default {
                 await this.fetchReadmeForActiveSlide();
             } catch (e) {
                 console.log(e);
-                
+
             } finally {
                 this.loading = false;
                 this.btnsShown = true;
             }
-
         },
         async handleSlide(slideNdx) {
             this.moveSlider(slideNdx);
@@ -95,14 +92,14 @@ export default {
         },
     },
     async mounted() {
-        if (this.initialSlide){
-            const ndx = this.trendings.findIndex(item => item.id == this.initialSlide)
+        console.log("123 this.initialSlide",this.initialSlide)
+        if (this.initialSlide) {
+            const ndx = this.trendings.findIndex(item => item.id === this.initialSlide)
             await this.handleSlide(ndx)
         }
         await this.fetchTrendings();
         await this.loadReadme()
     }
-
 }
 </script>
 

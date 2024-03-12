@@ -1,5 +1,5 @@
 <template>
-    <button :class="['storiesItem', { 'activeStory': isActive }]" @click="toggle(); $emit('onPress')">
+    <button class="storiesItem" @click="$emit('onstoryPress')">
         <div class="border_avatar">
             <div class="avatar">
                 <img :src="avatar" class="img" alt="user_avatar">
@@ -24,12 +24,7 @@ export default {
     },
     data() {
         return {
-            isActive: true,
-        }
-    },
-    methods: {
-        toggle() {
-            this.isActive = false
+           
         }
     }
 }
@@ -47,7 +42,7 @@ export default {
     align-items: center;
 }
 
-.activeStory .border_avatar {
+.border_avatar {
     border: 2px solid #a6328d;
 }
 
@@ -63,5 +58,13 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.storiesItem {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 </style>
