@@ -2,7 +2,7 @@
   <button :class="['button', { 'active': isOpened }]" @click="toggle">
         <span class="text">{{ isOpened ? "Hide" : "View" }} issues</span>
         <span class="icon">
-            <IconComponent name="IconArrow" />
+            <IconComponent name="IconArrowToggle" />
         </span>
     </button>
 </template>
