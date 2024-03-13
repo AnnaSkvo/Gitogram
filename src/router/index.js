@@ -8,9 +8,10 @@ const routes = [{
     name: 'feeds'
 },
 {
-    path: '/stories',
+    path: '/stories/:initialSlide',
     component: StoriesPage,
-    name: 'stories'
+    name: 'stories',
+    props:true
 }]
 
 export const router = createRouter({

@@ -38,11 +38,6 @@ export default {
         return {
         }
     },
-    mounted() {
-        console.log("4 $route.params.initialSlide",this.$route.params.initialSlide)
-        console.log("5 this.initialSlide",this.initialSlide)
-        console.log("6 this.$route",this.$route)
-    }
 }
 </script>
 

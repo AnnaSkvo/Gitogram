@@ -92,7 +92,6 @@ export default {
         },
     },
     async mounted() {
-        console.log("123 this.initialSlide",this.initialSlide)
         if (this.initialSlide) {
             const ndx = this.trendings.findIndex(item => item.id === this.initialSlide)
             await this.handleSlide(ndx)
