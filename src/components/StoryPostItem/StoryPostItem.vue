@@ -22,7 +22,7 @@
             </div>
             </div>
             <div class="footer">
-                <xButton>Follow</xButton>
+                <xButton :theme="data.following.status ? 'grey': 'green'" :loading="data.following.loading" @click="$emit(data.following.status ? 'onUnFollow' : 'onFollow', data.id)" >{{ data.following.status ? 'Unfollow' : 'Follow' }}</xButton>
             </div>
             <div class="arrow_btn" v-if="active">
                 <button v-if="btnsShown.includes('prev')" class="btn btn-prev" @click="$emit('onPrevSlide')">
@@ -61,7 +61,7 @@ export default {
         PlaceholderComponent,
         SpinnerItem
     },
-    emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish'],
+    emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish', 'onFollow'],
     props: {
         active: Boolean,
         loading: Boolean,

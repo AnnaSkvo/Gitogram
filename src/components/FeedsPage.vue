@@ -10,8 +10,8 @@
             <div class="icon">
               <IconComponent name="IconHome" />
             </div>
-            <CurrentUserTop :avatar="currentuser.avatar" @onPress="currentuserPress(currentuser.id)" />
-            <div class="icon">
+            <CurrentUserTop :avatar="currentuser.avatar_url" @onPress="currentuserPress(currentuser.id)" />
+            <div class="icon btn_exit" @click="logout">
               <IconComponent name="IconExit" />
             </div>
           </div>
@@ -20,7 +20,8 @@
         <template #stories>
           <ul class="stories_list">
             <li class="stories_link" v-for="story in feeds" :key="story.id">
-              <StoriesItem :avatar="story.owner.avatar_url" :username="story.owner.login" @onstoryPress="$router.push({ name: 'stories', params: { initialSlide: story.id } })" />
+              <StoriesItem :avatar="story.owner.avatar_url" :username="story.owner.login"
+                @onstoryPress="$router.push({ name: 'stories', params: { initialSlide: story.id } })" />
             </li>
           </ul>
         </template>
@@ -29,7 +30,7 @@
   </header>
   <main class="content_feed">
     <ul class="feed_list">
-      <li class="feed_link" v-for="feed in feeds" :key="feed.id">
+      <li class="feed_link" v-for="feed in starred" :key="feed.id">
         <div class="news_card">
           <NewsCard>
 
@@ -82,10 +83,6 @@ import StoriesItem from '../components/StoriesItem/StoriesItem.vue'
 import TogglerComponent from '../components/TogglerComponent/TogglerComponent.vue'
 import CurrentUserTop from '../components/CurrentUserTop/CurrentUserTop.vue'
 import NewsCard from '../components/NewsCard/NewsCard.vue'
-
-import stories from './stories.json'
-import currentuser from './currentuser.json'
-
 import * as api from '../api'
 
 
@@ -101,14 +98,16 @@ export default {
   },
   data() {
     return {
-      stories,
-      currentuser,
-      feeds: []
+      currentuser: {},
+      feeds: [],
+      starred: []
     }
   },
   async created() {
     try {
       const { data } = await api.trendings.getTrendings();
+      const starreddata = await api.starred.getStarredRepos();
+      this.starred = starreddata.data
       this.feeds = data.items;
     } catch (error) {
       console.log("error")
@@ -118,7 +117,26 @@ export default {
   methods: {
     currentuserPress(id) {
       console.log("cvurrent_user_id", id)
+    },
+    async getUser() {
+      try {
+        const response = await fetch('https://api.github.com/user', {
+          headers: {
+            Authorization: `token ${localStorage.getItem('token')}`
+          }
+        });
+        this.currentuser = await response.json();
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    logout() {
+      localStorage.removeItem('token');
+      window.location.reload();
     }
+  },
+  mounted() {
+    this.getUser();
   }
 }
 </script>
@@ -139,6 +157,16 @@ export default {
   height: 32px;
 }
 
+.btn_exit {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn_exit:hover {
+  transform: scale(1.2);
+}
+
+
 .rightmenu {
   display: flex;
   width: 145px;
@@ -151,7 +179,7 @@ export default {
   overflow: auto;
 }
 
-.stories_link{
+.stories_link {
   margin: 0 10px;
 }
 

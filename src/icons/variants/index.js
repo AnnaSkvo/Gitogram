@@ -6,4 +6,6 @@ export { default as IconFork } from './IconFork.vue'
 export { default as IconStar } from './IconStar.vue'
 export { default as IconClose } from './IconClose.vue'
 export { default as IconArrowToggle } from './IconArrowToggle.vue'
+export { default as IconGit } from './IconGit.vue'
+export { default as IconAuth } from './IconAuth.vue'
 
