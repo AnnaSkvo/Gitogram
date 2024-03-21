@@ -1,23 +1,26 @@
 <template>
     <ArrowButton @onToggle="toggle" />
     <div class="comments" v-if="shown">
-        <ul class="comments_list">
+        <ul class="comments_list" v-if="feed_comments?.length">
             <li class="comments_item" v-for="comment in feed_comments" :key="comment.id">
-                <CommentUser :text="comment.comment" :username="comment.username" />
+                <CommentUser :text="comment.body" :username="comment.user.login" />
             </li>
         </ul>
+        <PlaceholderStringComponent v-else />
     </div>
 </template>
 
 <script>
 import ArrowButton from '../../components/ArrowButton/ArrowButton.vue'
 import CommentUser from '../../components/CommentUser/CommentUser.vue'
+import PlaceholderStringComponent from '../../components/PlaceholderStringComponent/PlaceholderStringComponent.vue'
 
 export default {
     name: 'TogglerComponent',
     components: {
         ArrowButton,
-        CommentUser
+        CommentUser,
+        PlaceholderStringComponent
     },
     props: {
         feed: {
@@ -29,23 +32,7 @@ export default {
         return {
 
             shown: false,
-            feed_comments: [
-                {
-                    "id": "1",
-                    "username": "joshua_l",
-                    "comment": "Enable performance measuring in production, at the user's request"
-                },
-                {
-                    "id": "2",
-                    "username": "Camille",
-                    "comment": "It's Impossible to Rename an Inherited Slot"
-                },
-                {
-                    "id": "3",
-                    "username": "Marselle",
-                    "comment": "transition-group with flex parent causes removed items to fly"
-                }
-            ]
+            feed_comments: []
         }
     },
     methods: {
@@ -53,7 +40,24 @@ export default {
 
             this.shown = isOpened
             this.$emit("onToggle", isOpened)
-        }
+
+            if (this.shown) {
+                this.getComments(this.feed);
+            }
+        },
+        async getComments(feed) {
+            try {
+                const response = await fetch(`${feed.issue_comment_url.replace('{/number}', '')}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                this.feed_comments = await response.json();
+            } catch (e) {
+                console.log(e)
+            }
+        },
     }
 }
 </script>
