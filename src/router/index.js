@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import FeedsPage from '../components/FeedsPage.vue'
 import StoriesPage from '../components/StoriesPage.vue'
 import AuthPage from '../components/AuthPage.vue'
+import ProfilePage from '../components/ProfilePage.vue'
+import FollowingPage from '../components/FollowingPage.vue'
 
 const routes = [{
     path: '/',
@@ -17,6 +19,16 @@ const routes = [{
     component: StoriesPage,
     name: 'stories',
     props: true
+},
+{
+    path: '/profile',
+    component: ProfilePage,
+    name: 'profile'
+},
+{
+    path: '/following',
+    component: FollowingPage,
+    name: 'following'
 }]
 
 export const router = createRouter({

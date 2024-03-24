@@ -1,6 +1,5 @@
 <template>
   <div class="newscard">
-    <div class="x-container">
       <div class="user">
         <slot name="user"></slot>
       </div>
@@ -13,7 +12,6 @@
       <div class="date">
         <slot name="date"></slot>
       </div>
-    </div>
   </div>
 </template>
 
@@ -35,9 +33,6 @@ export default {
 </script>
 
 <style scoped>
-.x-container {
-  width: 979px;
-}
 
 .user {
   display: flex;

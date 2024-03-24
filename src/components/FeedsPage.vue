@@ -10,7 +10,9 @@
             <div class="icon">
               <IconComponent name="IconHome" />
             </div>
-            <CurrentUserTop :avatar="currentuser.avatar_url" @onPress="currentuserPress(currentuser.id)" />
+            <div>
+              <CurrentUserTop :avatar="currentuser.avatar_url"/>
+            </div>
             <div class="icon btn_exit" @click="logout">
               <IconComponent name="IconExit" />
             </div>
@@ -31,7 +33,7 @@
   <main class="content_feed">
     <ul class="feed_list">
       <li class="feed_link" v-for="feed in starred" :key="feed.id">
-        <div class="news_card">
+        <div class="news_card x-container">
           <NewsCard>
 
             <template #user>
@@ -100,7 +102,7 @@ export default {
     return {
       currentuser: {},
       feeds: [],
-      starred: []
+      starred: [],
     }
   },
   async created() {
@@ -115,9 +117,6 @@ export default {
 
   },
   methods: {
-    currentuserPress(id) {
-      console.log("cvurrent_user_id", id)
-    },
     async getUser() {
       try {
         const response = await fetch('https://api.github.com/user', {

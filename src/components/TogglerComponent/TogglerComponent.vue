@@ -1,7 +1,7 @@
 <template>
     <ArrowButton @onToggle="toggle" />
     <div class="comments" v-if="shown">
-        <ul class="comments_list" v-if="feed_comments?.length">
+        <ul class="comments_list" v-if="feed_comments">
             <li class="comments_item" v-for="comment in feed_comments" :key="comment.id">
                 <CommentUser :text="comment.body" :username="comment.user.login" />
             </li>
@@ -30,9 +30,8 @@ export default {
     },
     data() {
         return {
-
             shown: false,
-            feed_comments: []
+            feed_comments: null
         }
     },
     methods: {
@@ -41,7 +40,7 @@ export default {
             this.shown = isOpened
             this.$emit("onToggle", isOpened)
 
-            if (this.shown) {
+            if (this.shown && !this.feed_comments) {
                 this.getComments(this.feed);
             }
         },
