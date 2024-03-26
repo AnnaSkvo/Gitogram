@@ -56,9 +56,8 @@
                   <p class="user_name">{{ feed.owner.login }}</p>
                   <p class="user_descr">user</p>
                 </div>
-
               </div>
-              <xButton :theme='green'>{{ 'following' }}</xButton>
+              <xButton v-bind="args"></xButton>
             </div>
           </li>
         </ul>
@@ -86,6 +85,10 @@ export default {
   },
   data() {
     return {
+      args: {
+        text: "Following",
+        hoverText: "Unfollow"
+    },
       currentuser: {},
       starred: []
     }

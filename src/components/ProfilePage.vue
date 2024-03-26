@@ -86,7 +86,7 @@ import CurrentUserTop from '../components/CurrentUserTop/CurrentUserTop.vue'
 import NewsCard from '../components/NewsCard/NewsCard.vue'
 
 /*--- Этот код с Composition API не работает ---*/
-import Profile from './ProfilePage.js'
+/*import Profile from './ProfilePage.js'
 export default {
   name: 'ProfilePage',
   components: {
@@ -100,12 +100,12 @@ export default {
       ...Profile()
     }
   },
-}
+}*/
 /*--- конец неработающего кода с Composition API ---*/
 
 
 /*--- Этот код без Composition API работает ---*/
-/* 
+ 
 import * as api from '../api'
 
 export default {
@@ -153,7 +153,7 @@ export default {
   mounted() {
     this.getUser();
   }
-} */
+} 
 /*--- конец работающего кода без Composition API ---*/
 </script>
 
